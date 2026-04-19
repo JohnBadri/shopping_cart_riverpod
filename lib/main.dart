@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shopping_cart_riverpod/product_body.dart';
 
 void main() {
   runApp(ProviderScope(child: MainApp()));
@@ -10,11 +11,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+        appBar: AppBar(),
+        body: ProductBody(),
       ),
     );
   }

@@ -8,7 +8,7 @@ final dio = Dio();
 @riverpod
 Future<List<Product>> getProducts(Ref ref) async {
   final response = await dio.get('https://fakestoreapi.com/products');
-  return (response.data)
+  return (response.data as List)
       .map((item) => Product.fromJson(item as Map<String, dynamic>))
       .toList();
 }
@@ -28,10 +28,10 @@ class Product {
     return Product(
       id: json['id'] as int,
       title: json['title'] as String,
-      price: json['price'] as double,
+      price: (json['price'] as num).toDouble(),
       category: json['category'] as String,
       image: json['image'] as String,
-      rating: json['rating']['rate'] as double,
+      rating: (json['rating']['rate'] as num).toDouble(),
       reviewCount: json['rating']['count'] as int,
     );
   }
@@ -42,5 +42,5 @@ class Product {
   final String category;
   final String image;
   final double rating;
-  final int? reviewCount;
+  final int reviewCount;
 }
