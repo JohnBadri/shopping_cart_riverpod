@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shopping_cart_riverpod/model.dart';
 
 class CartPage extends ConsumerWidget {
   const CartPage({
@@ -8,6 +9,7 @@ class CartPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final cartItems = ref.watch(cartProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Cart'),

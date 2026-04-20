@@ -8,6 +8,7 @@ class ProductBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(getProductsProvider);
+    final cartWatch = ref.watch(cartProvider);
     return Center(
       child: switch (products) {
         AsyncData(:final value) => GridView.builder(
@@ -21,6 +22,7 @@ class ProductBody extends ConsumerWidget {
             childAspectRatio: 1.0,
           ),
           itemBuilder: (context, index) {
+            final isInCart = cartWatch.any((p) => p.id == value[index].id);
             return Card(
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
@@ -45,8 +47,20 @@ class ProductBody extends ConsumerWidget {
                     ),
 
                     ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('Add to Cart'),
+                      onPressed: () {
+                        if (isInCart) {
+                          ref
+                              .read(cartProvider.notifier)
+                              .removeProduct(value[index]);
+                        } else {
+                          ref
+                              .read(cartProvider.notifier)
+                              .addProduct(value[index]);
+                        }
+                      },
+                      child: !isInCart
+                          ? Text('Add to Cart')
+                          : Text('Remove Cart'),
                     ),
                   ],
                 ),

@@ -35,3 +35,19 @@ class Product {
   final double price;
   final String image;
 }
+
+@riverpod
+class CartNotifier extends _$CartNotifier {
+  @override
+  List<Product> build() {
+    return [];
+  }
+
+  void addProduct(Product product) {
+    state = [...state, product];
+  }
+
+  void removeProduct(Product product) {
+    state = state.where((item) => item.id != product.id).toList();
+  }
+}
