@@ -17,7 +17,22 @@ class CartPage extends ConsumerWidget {
       ),
       body: Container(
         padding: const EdgeInsets.all(30),
-        child: Text('data'),
+        child: Column(
+          children: [
+            for (final product in cartItems)
+              ListTile(
+                leading: Image.network(product.image),
+                title: Text(product.title),
+                subtitle: Text('\$${product.price}'),
+                trailing: IconButton(
+                  icon: const Icon(Icons.remove_circle),
+                  onPressed: () {
+                    ref.read(cartProvider.notifier).removeProduct(product);
+                  },
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
